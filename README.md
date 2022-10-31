@@ -22,4 +22,4 @@ Fig 2. The workflow of VEP annotation pipeline (from Stage 1 to Stage 7)
            input of the next stage: Stage 5.
 
 
-(the detailed stepwise work is included in the manual)
+(the detailed stepwise work is included in the manual: VEP annotation pipeline Manual.docx.pdf)

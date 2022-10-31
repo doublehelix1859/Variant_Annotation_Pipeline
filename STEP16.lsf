@@ -1,0 +1,22 @@
+#!/bin/bash
+#BSUB -J STEP16
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=10000]
+#BSUB -R span[hosts=1]
+#BSUB -n 1
+#BSUB -W 48:00
+#BSUB -o ./std/%J_STEP16.stdout
+#BSUB -eo ./std/%J_STEP16.stderr
+#BSUB -L /bin/bash
+
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP16_out
+
+
+cd $DIR/STEP15_out
+
+cut -d, -f1 --complement vep_${NAME}_15.csv > $DIR/STEP16_out/vep_${NAME}_16.csv
+cp "vep_${NAME}_16.csv" ../STEPM_out

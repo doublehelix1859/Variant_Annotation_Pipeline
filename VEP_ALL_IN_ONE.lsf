@@ -1,0 +1,25 @@
+#!/bin/bash
+#BSUB -J VEP_ALL_IN_ONE
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=1000]
+#BSUB -R span[hosts=1]
+#BSUB -n 1
+#BSUB -W 48:00
+#BSUB -o ./std/%J_vep_all_in_one.stdout
+#BSUB -eo ./std/%J_vep_all_in_one.stderr
+#BSUB -L /bin/bash
+
+source ./pSTEP0.sh
+cd $DIR
+mkdir $DIR/std
+
+#Splitting the vcf input(=vcf_split.lsf) and creating unique directories of each of the splitted vcf file
+bash pSTEP1.lsf;
+#Creating information of STEP0.sh(initial information used for Stage 0 ~ 7 and Post STEPs) (=wrt.sh)
+bash pSTEP2.sh;
+#Creating unique automating lsfs script for each of the splitted vcf file and copy those in each of the folder(=copy.sh)
+#Caution: the file, 'vep_all_the_way.lsf' should be copied or downloaded(from github: https://gitlab.com/itan-lab/gof-lof-classifier/-/tree/cigdem_feat/annotations/Minju/VEP(NEW)) in the working directory
+bash pSTEP3.sh;
+#Executing the control lsf script which also executes all lsf scripts applying VEP_annotation to each splitted vcf(=control.sh)
+bash pSTEP4.sh

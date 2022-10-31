@@ -1,0 +1,109 @@
+#!/bin/bash
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=1000]
+#BSUB -R span[hosts=1]
+#BSUB -n 1
+#BSUB -W 48:00
+#BSUB -o ./std/%J_ALL.stdout
+#BSUB -eo ./std/%J_ALL.stderr
+#BSUB -L /bin/bash
+
+
+#################################################################################
+#########Before executing this script############################################
+##1. If your input vcf contains <= 100,000 variants, disregard this #############
+##2. If your input vcf contains > 100,000 variants, please remove the second ####
+###  line from the top "#BSUB -J vep_all_the_way" and then execute ##############
+#################################################################################
+
+
+source ./STEP0.sh
+cd $DIR
+mkdir $DIR/std
+
+#Stage0
+#Processing the input vcf file
+
+#Stage1
+#input the initial information into STEP0.sh file
+
+bsub -J STEP1 < STEP1.lsf
+bsub -J STEP2 -w 'done(STEP1)' < STEP2.lsf
+bsub -J STEP3 -w 'done(STEP2)' < STEP3.lsf
+
+#Stage2
+bsub -J STEP4_1 -w 'done(STEP3)' < STEP4_1.lsf
+bsub -J STEP4_2 -w 'done(STEP3)' < STEP4_2.lsf
+bsub -J STEP4_3 -w 'done(STEP3)' < STEP4_3.lsf
+bsub -J STEP4_4 -w 'done(STEP3)' < STEP4_4.lsf
+
+#Stage3
+bsub -J STEP5 -w 'done(STEP4_1)' < STEP5.lsf
+bsub -J STEP6 -w 'done(STEP5)' < STEP6.lsf
+bsub -J STEP7 -w 'done(STEP6)' < STEP7.lsf
+bsub -J STEP8 -w 'done(STEP7)' < STEP8.lsf
+
+#Stage4
+#STEP_BM is manually done
+#However, if the user needs to earn a new file, please execute this line below
+#bsub -J STEP_BM -w 'done(STEP3)' < STEP_BM.lsf
+
+
+#Stage5
+bsub -J STEP9 -w 'done(STEP8)' < STEP9.lsf
+
+#Stage6
+bsub -J STEP10 -w 'done(STEP9)' < STEP10.lsf
+
+#Stage7
+bsub -J STEP11 -w 'done(STEP10)' < STEP11.lsf
+bsub -J STEP12 -w 'done(STEP11)' < STEP12.lsf
+bsub -J STEP13 -w 'done(STEP12)' < STEP13.lsf
+bsub -J STEP14 -w 'done(STEP13)' < STEP14.lsf
+
+#Post stages
+bsub -J STEP15 -w 'done(STEP14)' < STEP15.lsf
+bsub -J STEP16 -w 'done(STEP15)' < STEP16.lsf
+
+#Merger all the csv results (available only for splition VEP)
+#This must be executed individually outside of sequenced job submission
+#bsub -J STEP17 -w 'done(STEP16)' < STEP17.lsf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

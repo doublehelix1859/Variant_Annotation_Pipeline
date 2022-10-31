@@ -1,0 +1,49 @@
+#!/bin/bash
+#BSUB -J STEP9
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=50000]
+#BSUB -R span[hosts=1]
+#BSUB -n 23
+#BSUB -W 168:00
+#BSUB -o ./std/%J_STEP9.stdout
+#BSUB -eo ./std/%J_STEP9.stderr
+#BSUB -L /bin/bash
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP9_out
+
+
+ml python/3.8.2
+
+python STEP9.py $DIR/STEP4_1_out/vep_${NAME}_4_1.csv /sc/arion/projects/Itan_lab/minju/annotations/sources/vep_input/STEP_BM_out/mart_out.csv $DIR/STEP9_out/vep_${NAME}_9.csv 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

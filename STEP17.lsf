@@ -1,0 +1,16 @@
+#!/bin/bash
+#BSUB -J STEP17
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=1000]
+#BSUB -R span[hosts=1]
+#BSUB -n 1
+#BSUB -W 48:00
+#BSUB -o ./std/%J_vep_all_in_one.stdout
+#BSUB -eo ./std/%J_vep_all_in_one.stderr
+#BSUB -L /bin/bash
+
+source ./pSTEP0.sh
+cd $DIR/STEP17_out
+
+{ head -n1 vep_${NAME}_1_16.csv; for f in vep_${NAME}_*_16.csv; do tail -n+2 "$f"; done; } > vep_${NAME}_17.csv

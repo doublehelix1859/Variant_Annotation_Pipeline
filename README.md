@@ -1,4 +1,4 @@
-# Variant_annotation_pipeline
+# Variant_annotation_pipeline (VAP)
 Gene annotation combining Ensembl Variant Effect Predictor (VEP) and other external databases
 
 Purpose

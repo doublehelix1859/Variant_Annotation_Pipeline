@@ -1,0 +1,68 @@
+#!/bin/bash
+#BSUB -J STEP4_3
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=30000]
+#BSUB -R span[hosts=1]
+#BSUB -n 20
+#BSUB -W 168:00
+#BSUB -o ./std/%J_STEP4_3.stdout
+#BSUB -eo ./std/%J_STEP4_3.stderr
+#BSUB -L /bin/bash
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP4_3_out
+
+ml python/3.8.2
+
+python $DIR/STEP4_3.py $DIR/STEP3_out/vep_${NAME}_3.csv $DIR/STEP4_3_out/vep_${NAME}_4_3.csv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

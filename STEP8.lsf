@@ -1,0 +1,78 @@
+#!/bin/bash
+#BSUB -J STEP8
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=10000]
+#BSUB -R span[hosts=1]
+#BSUB -n 20
+#BSUB -W 48:00
+#BSUB -o ./std/%J_STEP8.stdout
+#BSUB -eo ./std/%J_STEP8.stderr
+#BSUB -L /bin/bash
+
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP8_out
+
+
+ml python/3.8.2
+
+python STEP8.py $DIR/STEP7_out/vep_${NAME}_7.out $DIR/STEP8_out/ $DIR/STEP8_out/vep_${NAME}_8.csv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

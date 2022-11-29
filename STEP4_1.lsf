@@ -1,0 +1,21 @@
+#!/bin/bash
+#BSUB -J STEP4_1
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -n 11
+#BSUB -R rusage[mem=10000]
+#BSUB -R span[hosts=1]
+#BSUB -W 48:00
+#BSUB -o ./std/%J_STEP4_1.stdout
+#BSUB -eo ./std/%J_STEP4_1.stderr
+#BSUB -L /bin/bash
+
+source ./STEP0.sh
+
+cd $DIR
+mkdir STEP4_1_out
+
+
+ml python/3.8.2
+
+python STEP4_1.py $DIR/STEP3_out/vep_${NAME}_3.tsv /sc/arion/projects/Itan_lab/minju/annotations/sources/vep_input/biomart_out.txt $DIR/STEP4_1_out/vep_${NAME}_4_1.csv

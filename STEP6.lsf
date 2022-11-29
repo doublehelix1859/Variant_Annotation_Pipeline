@@ -1,0 +1,76 @@
+#!/bin/bash
+#BSUB -J STEP6
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=30000]
+#BSUB -R span[hosts=1]
+#BSUB -n 20
+#BSUB -W 168:00
+#BSUB -o ./std/%J_STEP6.stdout
+#BSUB -eo ./std/%J_STEP6.stderr
+
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP6_out
+
+
+ml python/3.8.2
+
+python STEP6.py $DIR/STEP4_1_out/vep_${NAME}_4_1.csv $DIR/STEP5_out $DIR/STEP6_out 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

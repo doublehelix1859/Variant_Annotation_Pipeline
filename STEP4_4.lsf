@@ -1,0 +1,72 @@
+#!/bin/bash
+#BSUB -J STEP4_4
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -R rusage[mem=30000]
+#BSUB -R span[hosts=1]
+#BSUB -n 20
+#BSUB -W 168:00
+#BSUB -o ./std/%J_STEP4_4.stdout
+#BSUB -eo ./std/%J_STEP4_4.stderr
+#BSUB -L /bin/bash 
+
+source ./STEP0.sh
+cd $DIR
+mkdir STEP4_4_out
+
+
+module load python/3.8.2
+
+python $DIR/STEP4_4.py $DIR/STEP3_out/vep_${NAME}_3.csv /sc/arion/projects/Itan_lab/minju/annotations/sources/vep_input/ARCHS4_Tissues-2.txt $DIR/STEP4_4_out/vep_${NAME}_4_4.csv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

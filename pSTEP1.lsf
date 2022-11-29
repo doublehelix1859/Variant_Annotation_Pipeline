@@ -1,0 +1,25 @@
+#!/bin/bash
+#BSUB -J vcf_split
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -n 47
+#BSUB -R rusage[mem=20000]
+#BSUB -R span[hosts=1]
+#BSUB -W 48:00
+#BSUB -o ./std/%J_vcf_split.stdout
+#BSUB -eo ./std/%J_vcf_split.stderr
+#BSUB -L /bin/bash
+
+
+source ./pSTEP0.sh
+cd $DIR
+mkdir std
+
+split -l 100000 --numeric-suffixes -a 3 your_input.vcf ${NAME}_;
+
+for file in ${NAME}_*; do
+    mv "$file" "${file}.vcf"
+    mkdir "${file}"
+    cp "${file}.vcf" ./"${file}";
+done
+

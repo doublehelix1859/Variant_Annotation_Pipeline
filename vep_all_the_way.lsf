@@ -65,9 +65,6 @@ bsub -J STEP14 -w 'done(STEP13)' < STEP14.lsf
 #Post stages
 bsub -J STEP15 -w 'done(STEP14)' < STEP15.lsf
 bsub -J STEP16 -w 'done(STEP15)' < STEP16.lsf
-
-#Merger all the csv results (available only for splition VEP)
-#This must be executed individually outside of sequenced job submission
 #bsub -J STEP17 -w 'done(STEP16)' < STEP17.lsf
 
 

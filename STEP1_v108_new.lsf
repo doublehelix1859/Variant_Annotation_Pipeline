@@ -1,0 +1,63 @@
+#!/bin/bash
+#BSUB -J STEP1
+#BSUB -P acc_Itan_lab
+#BSUB -q private
+#BSUB -n 41
+#BSUB -R rusage[mem=31500]
+#BSUB -R span[hosts=1]
+#BSUB -W 168:00
+#BSUB -o ./std/%J_STEP1.stdout
+#BSUB -eo ./std/%J_STEP1.stderr
+#BSUB -L /bin/bash
+
+source ./STEP0.*
+cd $DIR
+mkdir std
+mkdir STEP1_out
+
+
+source activate phen
+ml bcftools
+module load vep/108
+
+WRKDIR=/sc/arion/work/kimm61/STEP1_out
+cachedir=/hpc/packages/minerva-centos7/vep/108/cache/
+cadddir=/sc/arion/projects/Itan_lab/vep_data/CADD/GRCh38
+ref_fasta=/sc/arion/projects/Itan_lab/vep_data/fasta_ref/108/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+plugdir=/sc/arion/projects/Itan_lab/vep_data
+
+myinput=$IN
+myoutput=$DIR/STEP1_out/vep_${NAME}_1.vcf
+
+#HG38
+
+vep \
+--input_file $myinput --output_file $myoutput --stats_file ${myoutput}.stats \
+--verbose --vcf --dir_cache $cachedir --assembly GRCh38 --cache --sift b --polyphen b --ccds --no_stats --hgvs \
+--symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --pubmed \
+--variant_class --mane --total_length --pick_allele --offline --fasta $ref_fasta --dir_plugins $pathToPlugins \
+--force_overwrite --fork 40 --buffer_size 1000 --minimal --allele_number --af --max_af --af_gnomade --af_gnomadg --af_1kg \
+--plugin CADD,$cadddir/whole_genome_SNVs.tsv.gz,$cadddir/gnomad.genomes.r3.0.indel.tsv.gz \
+--plugin Blosum62 \
+--plugin Condel,$plugdir/Condel/config,b \
+--plugin Conservation,$plugdir/Conservation/gerp_conservation_scores.homo_sapiens.GRCh38.bw \
+--plugin ExACpLI,$plugdir/ExACpLI/ExACpLI_values.txt \
+--plugin pLI,/hpc/packages/minerva-centos7/vep/108/Plugins/pLI_values.txt \
+--plugin LoFtool,$plugdir/LoFtool/LoFtool_scores.txt \
+--plugin REVEL,$plugdir/REVEL/new_tabbed_revel_grch38.tsv.gz \
+--plugin StructuralVariantOverlap,file=$plugdir/StructuralVariantOverlap/gnomad_v2.1_sv.sites.vcf.gz \
+--plugin NearestExonJB \
+--plugin Carol \
+--plugin Downstream \
+--plugin GeneSplicer,$plugdir/GS/GeneSplicer/sources/genesplicer,$plugdir/GS/GeneSplicer/human,context=200,tmpdir=/tmp \
+--plugin MaxEntScan,$plugdir/maxentscan/ \
+--plugin Mastermind,$plugdir/mastermind/mastermind_cited_variants_reference-2021.04.02-grch38.vcf.gz \
+--plugin PON_P2,$plugdir/ponp2/ponp2.py,hg38 \
+--plugin ReferenceQuality,$plugdir/refquality/sorted_GRCh38_quality_mergedfile.gff3.gz \
+--plugin satMutMPRA,file=$plugdir/satmutmpra/satMutMPRA_GRCh38_ALL.gz \
+--plugin TSSDistance \
+--plugin DisGeNET,file=$plugdir/disgenet/all_variant_disease_pmid_associations_final.tsv.gz \
+--plugin dbscSNV,$plugdir/dbscsnv/dbscSNV1.1_GRCh38.txt.gz \
+--plugin dbNSFP,$plugdir/dbNSFP/dbNSFP4.1a_grch38.gz,transcript_match=1,ALL 
+
+#Watch out for the part of PON-P2: (--plugin PON_P2,$plugdir/ponp2/ponp2.py,hg38) must specify either hg38 or hg37 
